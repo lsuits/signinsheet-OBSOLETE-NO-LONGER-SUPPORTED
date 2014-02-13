@@ -28,39 +28,32 @@ $PAGE->navbar->ignore_active();
 $renderType = '';
 
 $selectgroupsec = optional_param('selectgroupsec', '', PARAM_TEXT);  
-
-
  
 if(isset($selectgroupsec)){
-	
 	if($selectgroupsec == 'all'){
 		$renderType = 'all';
 	}
 	else if($selectgroupsec == 'group'){
 		$renderType == 'group';
 	} 
-	
 	if(is_numeric($selectgroupsec)) {
 		$renderType = 'group';
 	}
-	
-		
 } else {
-		$renderType = 'all';
+	$renderType = 'all';
 }
 
 if($renderType == 'all' || $renderType == ''){
-		$courseName = $DB->get_record('course', array('id'=>$cid), 'shortname', $strictness=IGNORE_MISSING); 
-		$PAGE->navbar->add($courseName->shortname, new moodle_url($CFG->wwwroot . '/course/view.php?id=' . $cid));
-		$PAGE->navbar->add(get_string('showall', 'block_signinsheet'));
+	$courseName = $DB->get_record('course', array('id'=>$cid), 'shortname', $strictness=IGNORE_MISSING); 
+	$PAGE->navbar->add($courseName->shortname, new moodle_url($CFG->wwwroot . '/course/view.php?id=' . $cid));
+	$PAGE->navbar->add(get_string('showall', 'block_signinsheet'));
 	
 }
 else if($renderType == 'group'){
-		$courseName = $DB->get_record('course', array('id'=>$cid), 'shortname', $strictness=IGNORE_MISSING); 
-		$PAGE->navbar->add($courseName->shortname, new moodle_url($CFG->wwwroot . '/course/view.php?id=' . $cid));
-		$PAGE->navbar->add(get_string('showbygroup', 'block_signinsheet'));
+	$courseName = $DB->get_record('course', array('id'=>$cid), 'shortname', $strictness=IGNORE_MISSING); 
+	$PAGE->navbar->add($courseName->shortname, new moodle_url($CFG->wwwroot . '/course/view.php?id=' . $cid));
+	$PAGE->navbar->add(get_string('showbygroup', 'block_signinsheet'));
 }
-
 
 $PAGE->set_url('/blocks/signinsheet/showsigninsheet/show.php');
 $PAGE->set_context(get_system_context());
@@ -68,9 +61,10 @@ $PAGE->set_heading(get_string('pluginname', 'block_signinsheet'));
 $PAGE->set_title(get_string('pluginname', 'block_signinsheet'));
 
 echo $OUTPUT->header();
+$context = context_system::instance();
+if (has_capability('mod/glossary:approve', $context)) {
 echo buildMenu($cid);
-
-
+}
 
 $logoEnabled = get_config('block_signinsheet', 'customlogoenabled');
 
@@ -78,24 +72,10 @@ if($logoEnabled){
 	printHeaderLogo();
 }
 
-
 // Render the page
 $selectgroupsec = optional_param('selectgroupsec', '', PARAM_TEXT);   
-if(isset($selectgroupsec)){
-	
-	if($selectgroupsec == 'all' || $selectgroupsec == ''){
-		 
-		echo renderAll();
-		
-	} else {
-		
-		echo renderGroup();
-	
-	}
-	
-} else {
-
-	echo renderAll();
+if (has_capability('mod/glossary:approve', $context)) {
+echo renderGroup();
 }
 
 class signinsheet_form extends moodleform {
@@ -107,26 +87,17 @@ class signinsheet_form extends moodleform {
 	}
 }
 
-
-
-
-
-
-
 /*
  * 
  * Create the HTML output for the list on the right
  * hand side of the showsigninsheet.php page
  * 
  * */
-function buildMenu($cid){
-	
+function buildMenu($cid){	
 	global $DB, $CFG, $renderType;
-	
 	$orderBy = '';
 	$orderBy = optional_param('orderby', '', PARAM_TEXT);
-	
-	
+
 	$outputHTML = '<div style="float:right"><form action="'.$CFG->wwwroot. '/blocks/signinsheet/genlist/show.php?cid='.$cid.'" method="post">
 				 Order By: <select name="orderby" id="orderby">
 								<option value="firstname">' .get_string('firstname', 'block_signinsheet').'</option>
@@ -160,17 +131,13 @@ function buildMenu($cid){
    				<input type="submit" value="'.get_string('printbutton', 'block_signinsheet').'">
 				</span>
 				</form>
-				
-
 			    </div>
-			    
-
-				</div>
+			</div>
 				';
 	
 	return $outputHTML;
-	
 }
+
 /*
  * Build up the dropdown menu items with groups that are associated
  * to the currently open course.
@@ -185,12 +152,9 @@ function buildGroups($cid){
 
 	foreach($groups as $group){
 		$groupId = $group->id;
-		
 		$buildHTML.= '<option value="'.$groupId.'">'. $group->name.'</option>';
 	}
-	
-	return $buildHTML;
-	
+	return $buildHTML;	
 }
 
 $mform = new signinsheet_form();
@@ -209,7 +173,6 @@ echo $OUTPUT->footer();
  $orderBy = optional_param('orderby', '', PARAM_TEXT);
 	if(isset($orderBy)){
 		$orderItem = $orderBy;
-		
 		echo '<script>
 				document.getElementById("orderby").value = "'.$orderItem.'"
 			  </script>';
@@ -220,4 +183,4 @@ echo $OUTPUT->footer();
 			  </script>';
 				
 			  }
-	} 
+	}

@@ -22,7 +22,7 @@ if(isset($renderType)){
 	
 	if($renderType == 'all' || $renderType == ''){
 		
-		echo renderAll();
+		echo renderGroup();
 		
 	}
 	else if($renderType == 'group'){

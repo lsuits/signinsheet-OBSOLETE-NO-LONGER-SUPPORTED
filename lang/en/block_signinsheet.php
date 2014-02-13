@@ -1,16 +1,16 @@
 <?php
 
-$string['pluginname'] = 'Sign in Sheet';
-$string['signinsheet:addinstance'] = 'Sign in Sheet';
-$string['signinsheet:myaddinstance'] = 'Sign in Sheet';
+$string['pluginname'] = 'RollSheet';
+$string['signinsheet:addinstance'] = 'RollSheet';
+$string['signinsheet:myaddinstance'] = 'RollSheet';
 
 $string['showall'] = 'Show All';
-$string['showbygroup'] = 'Show Faces By Group';
+$string['showbygroup'] = 'Show By Section';
 $string['update'] = 'Update';
 
 $string['date'] = 'Date';
 $string['course'] = 'Course';
-$string['printbutton'] = 'Print Sign in Sheet';
+$string['printbutton'] = 'Print RollSheet';
 
 
 $string['firstname'] = 'First Name';
@@ -44,7 +44,7 @@ $string['customtext'] = 'Custom Text';
 $string['customtextdesc'] = 'Custom Text to include at top of sheet';
 $string['includecustomtextfielddesc'] = 'Include Custom text field';
 $string['selectlogo'] = 'Select Logo';
-$string['signaturesheet'] = 'Signature Sheet';
+$string['signaturesheet'] = 'LSU Class Roll';
 $string['signinsheet:view'] = 'View';
 $string['hidefromstudents'] = 'Hide Block From Students';
 $string['hidefromstudents_desc'] = 'When hidden, students will not be able to see the block (site wide)';
@@ -52,3 +52,6 @@ $string['signinsheet:viewblock'] = 'View Sign in sheet block';
 $string['idfield'] = 'Include ID Number';
 $string['idfielddesc'] = 'Include Moodle Student ID field';
 $string['idnumber'] = 'ID Number';
+$string['teacher'] = 'Primary Instructor';
+$string['room'] = 'Room #';
+$string['disclaimer'] = '"Falsifying information on a class roll sheet in any manner..." is a violation of the Code of Student Professional Responsibility.';

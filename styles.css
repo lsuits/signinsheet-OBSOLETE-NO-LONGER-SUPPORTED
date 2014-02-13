@@ -1,0 +1,59 @@
+@page { size 8.5in 11in; margin: 2cm }
+td { page-break-after: always }
+
+.path-blocks-signinsheet .titles {
+  padding: 0 20px;
+}
+
+.path-blocks-signinsheet p {
+  margin: 0;
+  padding: 0;
+}
+
+.path-blocks-signinsheet .disclaimer {
+  font-size: 10px;
+}
+
+.path-blocks-signinsheet .center {
+  text-align: center;
+}
+
+.path-blocks-signinsheet .rolltitle {
+  font-size: 18px;
+}
+
+.path-blocks-signinsheet .rollcourse {
+  font-size: 25px;
+}
+
+.path-blocks-signinsheet .rollgroup {
+  font-size: 20px;
+}
+
+.path-blocks-signinsheet .printHeaderLogo {
+  height: 30px;
+}
+
+.path-blocks-signinsheet table.roll {
+  width: 99%;
+  margin: 10px auto;;
+  border: 1px solid #000000;
+  background-color: #ffffff;
+}
+
+.path-blocks-signinsheet table.roll tr:nth-child(even) td {
+  background-color: #dddddd;
+}
+
+.path-blocks-signinsheet table.roll td.rolldata-rb {
+  border-right: 1px solid #000000;
+  border-bottom: 1px solid #000000;
+}
+
+.path-blocks-signinsheet .ten-percent {
+  width: 10%;
+}
+
+.path-blocks-signinsheet .thirty {
+  width: 30%;
+}
