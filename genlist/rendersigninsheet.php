@@ -28,26 +28,40 @@ function renderGroup(){
 	$appendOrder = '';
 	$orderBy = optional_param('orderby', '', PARAM_TEXT);		
 		if($orderBy == 'byid'){
-			$appendOrder = ' order by userid';
+			$appendOrder = ' order by u.id';
 		}
 		else if($orderBy == 'firstname'){
-			$appendOrder = ' order by  (select firstname from '.$CFG->prefix.'user usr where userid = usr.id)';
+			$appendOrder = ' order by  u.firstname';
 		}
 		else if($orderBy == 'lastname'){
-			$appendOrder = ' order by  (select lastname from '.$CFG->prefix.'user usr where userid = usr.id)';
+			$appendOrder = ' order by  u.lastname';
 		}
 		 else {
-			$appendOrder = ' order by userid';
+			$appendOrder = ' order by u.id';
 		}
 
 	// Check if we need to include a custom field
 	$addFieldEnabled = get_config('block_signinsheet', 'includecustomfield');
 	$groupName = $DB->get_record('groups', array('id'=>$selectedGroupId), $fields='*', $strictness=IGNORE_MISSING); 
         if($groupName) {
-                $query = 'select * from '.$CFG->prefix.'groups_members where groupid = ?' . $appendOrder;
+                $query = 'SELECT gm.id, gm.groupid, gm.userid, r.shortname
+                                FROM {course} AS c
+                                INNER JOIN {context} AS cx ON c.id = cx.instanceid AND cx.contextlevel = "50"
+                                INNER JOIN {role_assignments} AS ra ON cx.id = ra.contextid
+                                INNER JOIN {role} AS r ON ra.roleid = r.id
+                                INNER JOIN {user} AS u ON ra.userid = u.id
+                                INNER JOIN {groups_members} AS gm ON u.id = gm.userid
+                                INNER JOIN {groups} AS g ON gm.groupid = g.id AND c.id = g.courseid
+                                WHERE r.shortname = "student" AND gm.groupid = ?' . $appendOrder;
                 $result = $DB->get_records_sql($query,array($selectedGroupId));
         } else {
-                $query = "select userid from ".$CFG->prefix."user_enrolments en where en.enrolid IN (select e.id from ".$CFG->prefix."enrol e where courseid= ?)" . $appendOrder;
+                $query = 'SELECT u.id AS userid
+                                FROM {course} AS c
+                                INNER JOIN {context} AS cx ON c.id = cx.instanceid AND cx.contextlevel = "50"
+                                INNER JOIN {role_assignments} AS ra ON cx.id = ra.contextid
+                                INNER JOIN {role} AS r ON ra.roleid = r.id
+                                INNER JOIN {user} AS u ON ra.userid = u.id
+                                WHERE r.shortname = "student" AND c.id = ?' . $appendOrder;
                 $result = $DB->get_records_sql($query, array($cid));
 	}
 
