@@ -18,7 +18,8 @@ global $CFG, $DB;
 require_login();
 
 require_once('rendersigninsheet.php');
-
+//$test = $this->config->studentsPerPage;
+$test = required_param('spp', PARAM_TEXT);
 $cid = required_param('cid', PARAM_INT);
 $gid = optional_param('gid', '', PARAM_INT);    
 
@@ -63,7 +64,7 @@ $PAGE->set_title(get_string('pluginname', 'block_signinsheet'));
 echo $OUTPUT->header();
 $context = context_system::instance();
 if (has_capability('mod/glossary:approve', $context)) {
-echo buildMenu($cid);
+echo buildMenu($cid, $test);
 }
 
 $logoEnabled = get_config('block_signinsheet', 'customlogoenabled');
@@ -75,7 +76,7 @@ if($logoEnabled){
 // Render the page
 $selectgroupsec = optional_param('selectgroupsec', '', PARAM_TEXT);   
 if (has_capability('mod/glossary:approve', $context)) {
-echo renderGroup();
+echo renderGroup($test);
 }
 
 class signinsheet_form extends moodleform {
@@ -93,12 +94,12 @@ class signinsheet_form extends moodleform {
  * hand side of the showsigninsheet.php page
  * 
  * */
-function buildMenu($cid){	
+function buildMenu($cid, $studentsPerPage){	
 	global $DB, $CFG, $renderType;
 	$orderBy = '';
 	$orderBy = optional_param('orderby', '', PARAM_TEXT);
 
-	$outputHTML = '<div style="float:right"><form action="'.$CFG->wwwroot. '/blocks/signinsheet/genlist/show.php?cid='.$cid.'" method="post">
+	$outputHTML = '<div style="float:right"><form action="'.$CFG->wwwroot. '/blocks/signinsheet/genlist/show.php?cid='.$cid.'&?spp='.$studentsPerPage.'" method="post">
 				 Order By: <select name="orderby" id="orderby">
 								<option value="firstname">' .get_string('firstname', 'block_signinsheet').'</option>
 								<option value="lastname">'.get_string('lastname', 'block_signinsheet').'</option>
@@ -160,13 +161,14 @@ function buildGroups($cid){
 $mform = new signinsheet_form();
 $mform->focus();
 $mform->display();		
-echo $OUTPUT->footer();
 
+// dwe - this is not working, it was missing a semi colon and $selectgroupsec is being treated as being set, but is empty
+/*
  $selectgroupsec = optional_param('selectgroupsec', '', PARAM_TEXT); 
 	if(isset($selectgroupsec)){
  		$selectedItem = $selectgroupsec;
 		echo '<script>
-				document.getElementById("selectgroupsec").value = '.$selectedItem.'
+				document.getElementById("selectgroupsec").value = '.$selectedItem.';
 			  </script>';
 	 }
 
@@ -184,3 +186,6 @@ echo $OUTPUT->footer();
 				
 			  }
 	}
+    */    
+        echo $OUTPUT->footer();
+

@@ -57,5 +57,6 @@ $uploaderLink = new moodle_url('/blocks/signinsheet/index.php');
          PARAM_INT));
 
 
+    $settings->add(new admin_setting_configtext('block_signinsheet/studentsPerPage', get_string('studentsPerPage', 'block_signinsheet'),null, null, PARAM_TEXT));
 
   

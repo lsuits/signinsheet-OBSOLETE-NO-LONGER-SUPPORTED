@@ -20,9 +20,11 @@ function printHeaderLogo(){
  *
  * 
  * */ 
-function renderGroup(){
+function renderGroup($passed_spp){
 	global $DB, $cid, $CFG;
-	$outputHTML = '';
+
+        $usersPerTable = $passed_spp;
+        $outputHTML = '';
 	$cid = required_param('cid', PARAM_INT);
 	$selectedGroupId = optional_param('selectgroupsec', '', PARAM_INT);
 	$appendOrder = '';
@@ -67,7 +69,12 @@ function renderGroup(){
 
 	$date = date('m-d-y');
 	$courseName = $DB->get_record('course', array('id'=>$cid), 'fullname', $strictness=IGNORE_MISSING); 
-
+        // dwe - attempting page break - not working yet
+           $outputHTML.= '<style type="text/css">
+                            .divBreak{
+                                page-break-before: always !important;
+                            }
+                            </style>';
 	$outputHTML .= '<div class="titles">';
 	$outputHTML .= '<p class="rolltitle center">'. get_string('signaturesheet', 'block_signinsheet') . '</p>';
 	$rolltitle = '<table class="borderless center disclaimer"><tr><td class = "thirty">' . get_string('course', 'block_signinsheet') . ': ' . $courseName->fullname . '</td><td class = "thirty">' . get_string('teacher', 'block_signinsheet') . ': </td><td class = "thirty">' . get_string('room', 'block_signinsheet') . ': </td><br />';
@@ -76,14 +83,20 @@ function renderGroup(){
         	$rolltitle = '<table class="borderless center disclaimer"><tr><td class = "thirty">' . get_string('course', 'block_signinsheet') . ': ' . $courseName->fullname . ' (' . $groupName->name . ')' . '</td><td class = "thirty">' . get_string('teacher', 'block_signinsheet') . ': </td><td class = "thirty">' . get_string('room', 'block_signinsheet') . ': </td><br />';
 	}
 
-        $outputHTML .= $rolltitle;
 
 	$outputHTML .= '</div>';
 
-	$outputHTML .= '
-		<table class="roll">
-			<tr>
-				<td class="rolldata-rb">Name</td>';
+        $totalUsers = count($result);
+        $tableCounter = ceil($totalUsers / $usersPerTable);
+        // START TABLE
+
+        while( ! empty($result)){
+            $outputHTML .= $rolltitle;
+            $outputHTML .= '
+	
+                <table class="roll">
+                    <tr>
+                        <td class="rolldata-rb">Name</td>';
 	
 	if($addFieldEnabled){
 		$fieldId = get_config('block_signinsheet', 'customfieldselect');
@@ -117,13 +130,20 @@ function renderGroup(){
 	
 	$colCounter = 0;
 	$totalRows = 0;
+            $k = 1;
+            foreach($result as $face){
 
-	foreach($result as $face){
-		$outputHTML .=  printSingleFace($face->userid, $cid);
-	}
+                $outputHTML .=  printSingleFace($face->userid, $cid);
+                array_shift($result);
+                    if ($k++ == $usersPerTable) break;
+            }
+        
 
-	$outputHTML .= '</tr></table>';
+        // dwe - added a divBreak class to a div - not working    
+	$outputHTML .= '</tr></table><table><DIV class="divBreak"></DIV></table>';
 	$outputHTML .= '<p class="center disclaimer">'. get_string('disclaimer', 'block_signinsheet').'</p>';
+              //}
+          }
 	return $outputHTML;
 }
 

@@ -12,6 +12,8 @@ $logoEnabled = get_config('block_signinsheet', 'customlogoenabled');
 
 echo $OUTPUT->header();
 
+$studentsPerPage = $this->config->studentsPerPage;
+
 if($logoEnabled){
 	printHeaderLogo();
 }
@@ -21,19 +23,19 @@ $renderType = optional_param('rendertype', '', PARAM_TEXT);
 if(isset($renderType)){
 	
 	if($renderType == 'all' || $renderType == ''){
-		
-		echo renderGroup();
+
+                echo renderGroup($studentsPerPage);
 		
 	}
 	else if($renderType == 'group'){
 	
-		echo renderGroup();
+		echo renderGroup($studentsPerPage);
 	
 	}
 	
 } else {
 
-	renderGroup();
+	renderGroup($studentsPerPage);
 }
 
 

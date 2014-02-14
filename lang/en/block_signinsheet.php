@@ -55,3 +55,4 @@ $string['idnumber'] = 'ID Number';
 $string['teacher'] = 'Primary Instructor';
 $string['room'] = 'Room #';
 $string['disclaimer'] = '"Falsifying information on a class roll sheet in any manner..." is a violation of the Code of Student Professional Responsibility.';
+$string['studentsPerPage'] ='Enter the number of students you want printed per page.'; 

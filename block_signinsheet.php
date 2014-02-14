@@ -2,77 +2,75 @@
 
 <?php
 
-
 class block_signinsheet extends block_base {
 
-
-function has_config() {return true;}
-
-function init() {
-
-    $this->title   = get_string('pluginname', 'block_signinsheet');
-    $plugin = new stdClass();
-    $plugin->version   = 2013090213;      // The current module version (Date: YYYYMMDDXX)
-    $plugin->requires  = 2011070110.00;      // Requires this Moodle version
-
-
-  }
-
-function get_content() {
-
-
-
-    if ($this->content !== NULL) {
-      return $this->content;
+    function has_config() {
+        return true;
     }
 
-    global $CFG;
-    global $COURSE;
-	global $DB;
+    function init() {
 
-    $this->content =  new stdClass;
+        $this->title = get_string('pluginname', 'block_signinsheet');
+        $plugin = new stdClass();
+        $plugin->version = 2013090213;      // The current module version (Date: YYYYMMDDXX)
+        $plugin->requires = 2011070110.00;      // Requires this Moodle version
+    }
 
-	$blockHidden = get_config('block_signinsheet', 'hidefromstudents');
+    function get_content() {
+        if (isset($this->config->studentsPerPage)) {
+            $spp = $this->config->studentsPerPage;
+        } else {
+            $spp = get_config('block_signinsheet', 'studentsPerPage');
+        }
 
-	//
-	// If the admin has selected to hide from students
-	//
+        if ($this->content !== NULL) {
+            return $this->content;
+        }
+
+        global $CFG;
+        global $COURSE;
+        global $DB;
+
+        $this->content = new stdClass;
+
+        $blockHidden = get_config('block_signinsheet', 'hidefromstudents');
+
+        //
+        // If the admin has selected to hide from students
+        //
 	if (!empty($blockHidden)) {
-		if (has_capability('block/signinsheet:viewblock', $this->context)) {
-	   		 $this->content->text = getSignInNav();
-		} else {
-			
-		}
-	} else {
-		$this->content->text = getSignInNav();
-	}
+            if (has_capability('block/signinsheet:viewblock', $this->context)) {
+
+                $this->content->text = getSignInNav($spp);
+            } else {
+
+            }
+        } else {
+            $this->content->text = getSignInNav($spp);
+        }
 
 
-    $this->content->footer = '';
+        $this->content->footer = '';
 
-    return $this->content;
-  }
+        return $this->content;
+    }
+
 }
-
 
 /*
 
 
-*/
-function getSignInNav(){
+ */
 
+function getSignInNav($spp) {
 
-	global $USER, $DB, $CFG; 
-	$cid = optional_param('id', '', PARAM_INT);
-	$bodyHTML = '<img src="'.$CFG->wwwroot. '/blocks/signinsheet/printer.gif"/> <a href="'.$CFG->wwwroot. '/blocks/signinsheet/genlist/show.php?cid='.$cid.'">'. get_string('genlist', 'block_signinsheet').'</a><br>
+    // dwe - added $spp studentsPerPage as a passed variable 
+    global $USER, $DB, $CFG;
+    $cid = optional_param('id', '', PARAM_INT);
+    $bodyHTML = '<img src="' . $CFG->wwwroot . '/blocks/signinsheet/printer.gif"/> <a href="' . $CFG->wwwroot . '/blocks/signinsheet/genlist/show.php?cid=' . $cid . '&spp=' . $spp . '">' . get_string('genlist', 'block_signinsheet') . '</a><br>
 				
 				';
 
 
-	return $bodyHTML;
-
-
+    return $bodyHTML;
 }
-
-
-
