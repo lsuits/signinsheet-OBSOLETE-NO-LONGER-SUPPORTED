@@ -1,6 +1,5 @@
 .path-blocks-signinsheet div#page {
   background-color: #fff !important;
-  font-size: 11px;
 }
 
 .path-blocks-signinsheet .titles {
@@ -50,6 +49,7 @@
 }
 
 .path-blocks-signinsheet table.roll {
+  font-size: 11px;
   width: 99%;
   margin: 10px auto;;
   border: 1px solid #000000;

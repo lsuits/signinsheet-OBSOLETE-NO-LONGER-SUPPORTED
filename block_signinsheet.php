@@ -1,13 +1,6 @@
-	
-
 <?php
 
 class block_signinsheet extends block_base {
-
-    function has_config() {
-        return true;
-    }
-
     function init() {
 
         $this->title = get_string('pluginname', 'block_signinsheet');
@@ -17,8 +10,6 @@ class block_signinsheet extends block_base {
     }
 
     function get_content() {
-            $spp = get_config('block_signinsheet', 'studentsPerPage');
-
         if ($this->content !== NULL) {
             return $this->content;
         }
@@ -37,12 +28,12 @@ class block_signinsheet extends block_base {
 	if (!empty($blockHidden)) {
             if (has_capability('block/signinsheet:viewblock', $this->context)) {
 
-                $this->content->text = getSignInNav($spp);
+                $this->content->text = getSignInNav();
             } else {
 
             }
         } else {
-            $this->content->text = getSignInNav($spp);
+            $this->content->text = getSignInNav();
         }
 
 
@@ -53,15 +44,9 @@ class block_signinsheet extends block_base {
 
 }
 
-function getSignInNav($spp) {
-
-    // dwe - added $spp studentsPerPage as a passed variable 
+function getSignInNav() {
     global $USER, $DB, $CFG;
     $cid = optional_param('id', '', PARAM_INT);
-    $bodyHTML = '<img src="' . $CFG->wwwroot . '/blocks/signinsheet/printer.gif"/> <a href="' . $CFG->wwwroot . '/blocks/signinsheet/genlist/show.php?cid=' . $cid . '&spp=' . $spp . '">' . get_string('genlist', 'block_signinsheet') . '</a><br>
-				
-				';
-
-
+    $bodyHTML = '<img src="' . $CFG->wwwroot . '/blocks/signinsheet/printer.gif"/> <a href="' . $CFG->wwwroot . '/blocks/signinsheet/genlist/show.php?cid=' . $cid . '">' . get_string('genlist', 'block_signinsheet') . '</a><br>';
     return $bodyHTML;
 }
