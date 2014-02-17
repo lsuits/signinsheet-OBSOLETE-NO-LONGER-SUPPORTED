@@ -20,10 +20,11 @@ function printHeaderLogo(){
  *
  * 
  * */ 
-function renderGroup($passed_spp){
+function renderGroup(){
 	global $DB, $cid, $CFG;
 
-        $usersPerTable = $passed_spp;
+        $pageCounter = 0;
+        $usersPerTable = get_config('block_signinsheet', 'studentsPerPage' );
         $outputHTML = '';
 	$cid = required_param('cid', PARAM_INT);
 	$selectedGroupId = optional_param('selectgroupsec', '', PARAM_INT);
@@ -69,18 +70,11 @@ function renderGroup($passed_spp){
 
 	$date = date('m-d-y');
 	$courseName = $DB->get_record('course', array('id'=>$cid), 'fullname', $strictness=IGNORE_MISSING); 
-        // dwe - attempting page break - not working yet
-           $outputHTML.= '<style type="text/css">
-                            .divBreak{
-                                page-break-before: always !important;
-                            }
-                            </style>';
 	$outputHTML .= '<div class="titles">';
-	$outputHTML .= '<p class="rolltitle center">'. get_string('signaturesheet', 'block_signinsheet') . '</p>';
-	$rolltitle = '<table class="borderless center disclaimer"><tr><td class = "thirty">' . get_string('course', 'block_signinsheet') . ': ' . $courseName->fullname . '</td><td class = "thirty">' . get_string('teacher', 'block_signinsheet') . ': </td><td class = "thirty">' . get_string('room', 'block_signinsheet') . ': </td><br />';
+	$rolltitle = '<table class="borderless"><tr><td>' . get_string('course', 'block_signinsheet') . ': ' . $courseName->fullname . '</td><td>' . get_string('teacher', 'block_signinsheet') . ': </td><td>' . get_string('room', 'block_signinsheet') . ': </td><br />';
 	
 	if($groupName){
-        	$rolltitle = '<table class="borderless center disclaimer"><tr><td class = "thirty">' . get_string('course', 'block_signinsheet') . ': ' . $courseName->fullname . ' (' . $groupName->name . ')' . '</td><td class = "thirty">' . get_string('teacher', 'block_signinsheet') . ': </td><td class = "thirty">' . get_string('room', 'block_signinsheet') . ': </td><br />';
+        	$rolltitle = '<table class="borderless center"><tr><td>' . get_string('course', 'block_signinsheet') . ': ' . $courseName->fullname . ' (' . $groupName->name . ')' . '</td><td>' . get_string('teacher', 'block_signinsheet') . ': </td><td>' . get_string('room', 'block_signinsheet') . ': </td><br />';
 	}
 
 
@@ -91,6 +85,8 @@ function renderGroup($passed_spp){
         // START TABLE
 
         while( ! empty($result)){
+            $pageCounter++;
+            $outputHTML .= '<p class="rolltitle center">'. get_string('signaturesheet', 'block_signinsheet') . ': page ' . $pageCounter . '</p>';
             $outputHTML .= $rolltitle;
             $outputHTML .= '
 	
@@ -139,8 +135,7 @@ function renderGroup($passed_spp){
             }
         
 
-        // dwe - added a divBreak class to a div - not working    
-	$outputHTML .= '</tr></table><table><DIV class="divBreak"></DIV></table>';
+	$outputHTML .= '</tr></table>';
 	$outputHTML .= '<p class="center disclaimer">'. get_string('disclaimer', 'block_signinsheet').'</p>';
               //}
           }

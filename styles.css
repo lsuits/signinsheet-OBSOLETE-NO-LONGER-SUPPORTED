@@ -1,5 +1,23 @@
+.path-blocks-signinsheet div#page {
+  background-color: #fff !important;
+  font-size: 11px;
+}
+
 .path-blocks-signinsheet .titles {
   padding: 0 20px;
+}
+
+.path-blocks-signinsheet .borderless {
+ width: 100%;
+}
+.path-blocks-signinsheet .borderless td {
+  font-size: 10px;
+  text-align: left !important;
+  padding: 0 10px;
+}
+
+.path-blocks-signinsheet .borderless td:last-child {
+  width: 10%;
 }
 
 .path-blocks-signinsheet p {
@@ -53,4 +71,19 @@
 
 .path-blocks-signinsheet .thirty {
   width: 30%;
+}
+
+.path-blocks-signinsheet p.center.disclaimer {
+  page-break-after: always;
+  margin-bottom: 30px;
+  margin-top: 10px;
+  font-size: 10px;
+}
+
+.path-blocks-signinsheet div.floatright {
+  width: 95%;
+  margin: 0 10px 0 auto;
+  padding-top: 5px;
+  text-align: right;
+  clear: both;
 }

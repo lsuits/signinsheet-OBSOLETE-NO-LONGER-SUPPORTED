@@ -17,11 +17,7 @@ class block_signinsheet extends block_base {
     }
 
     function get_content() {
-        if (isset($this->config->studentsPerPage)) {
-            $spp = $this->config->studentsPerPage;
-        } else {
             $spp = get_config('block_signinsheet', 'studentsPerPage');
-        }
 
         if ($this->content !== NULL) {
             return $this->content;
@@ -56,11 +52,6 @@ class block_signinsheet extends block_base {
     }
 
 }
-
-/*
-
-
- */
 
 function getSignInNav($spp) {
 
