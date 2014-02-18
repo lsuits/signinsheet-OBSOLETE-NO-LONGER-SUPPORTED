@@ -21,6 +21,7 @@ require_once('rendersigninsheet.php');
 $cid = required_param('cid', PARAM_INT);
 $gid = optional_param('gid', '', PARAM_INT);    
 
+$context = context_course::instance($cid);
 
 /** Navigation Bar **/
 $PAGE->navbar->ignore_active();
@@ -55,12 +56,11 @@ else if($renderType == 'group'){
 }
 
 $PAGE->set_url('/blocks/signinsheet/showsigninsheet/show.php');
-$PAGE->set_context(get_system_context());
+$PAGE->set_context($context);
 $PAGE->set_heading(get_string('pluginname', 'block_signinsheet'));
 $PAGE->set_title(get_string('pluginname', 'block_signinsheet'));
 
 echo $OUTPUT->header();
-$context = context_system::instance();
 if (has_capability('mod/glossary:approve', $context)) {
 echo buildMenu($cid);
 }

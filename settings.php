@@ -2,18 +2,11 @@
 defined('MOODLE_INTERNAL') || die;
 require_once($CFG->libdir.'/adminlib.php');
 
-
-
-
-
-
-
 $uploaderLink = new moodle_url('/blocks/signinsheet/index.php');
  $settings->add(new admin_setting_configcheckbox('block_signinsheet/customlogoenabled',
      new lang_string('addcustomlogo', 'block_signinsheet'),
         new lang_string('addcustomlogodesc', 'block_signinsheet') . '<br><a href="'. $uploaderLink.'">Click here to Upload</a>', null,
          PARAM_INT));
-   
 
      $settings->add(new admin_setting_configcheckbox('block_signinsheet/hidefromstudents',
      new lang_string('hidefromstudents', 'block_signinsheet'),

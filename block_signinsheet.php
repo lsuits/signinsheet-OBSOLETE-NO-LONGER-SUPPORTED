@@ -9,6 +9,10 @@ class block_signinsheet extends block_base {
         $plugin->requires = 2011070110.00;      // Requires this Moodle version
     }
 
+    function has_config() {
+        return true;
+    }
+
     function get_content() {
         if ($this->content !== NULL) {
             return $this->content;
