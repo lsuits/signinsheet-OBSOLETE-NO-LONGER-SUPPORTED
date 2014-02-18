@@ -21,7 +21,7 @@ function printHeaderLogo(){
  * 
  * */ 
 function renderGroup(){
-	global $DB, $cid, $CFG;
+	global $DB, $cid, $CFG, $OUTPUT;
 
         $pageCounter = 0;
         $usersPerTable = get_config('block_signinsheet', 'studentsPerPage' );
@@ -47,7 +47,7 @@ function renderGroup(){
 	$addFieldEnabled = get_config('block_signinsheet', 'includecustomfield');
 	$groupName = $DB->get_record('groups', array('id'=>$selectedGroupId), $fields='*', $strictness=IGNORE_MISSING); 
         if($groupName) {
-                $query = 'SELECT gm.id, gm.groupid, gm.userid, r.shortname
+                $query = 'SELECT u.id, gm.id, gm.groupid, gm.userid, r.shortname, u.firstname, u.lastname, u.picture, u.imagealt, u.email
                                 FROM {course} AS c
                                 INNER JOIN {context} AS cx ON c.id = cx.instanceid AND cx.contextlevel = "50"
                                 INNER JOIN {role_assignments} AS ra ON cx.id = ra.contextid
@@ -58,7 +58,7 @@ function renderGroup(){
                                 WHERE r.shortname = "student" AND gm.groupid = ?' . $appendOrder;
                 $result = $DB->get_records_sql($query,array($selectedGroupId));
         } else {
-                $query = 'SELECT u.id AS userid
+                $query = 'SELECT u.id, u.id AS userid, u.firstname, u.lastname, u.picture, u.imagealt, u.email
                                 FROM {course} AS c
                                 INNER JOIN {context} AS cx ON c.id = cx.instanceid AND cx.contextlevel = "50"
                                 INNER JOIN {role_assignments} AS ra ON cx.id = ra.contextid
@@ -127,8 +127,11 @@ function renderGroup(){
 	$colCounter = 0;
 	$totalRows = 0;
             $k = 1;
+	    $table = new html_table();
+            $userdata = array();
             foreach($result as $face){
-
+		    $userdata = array($OUTPUT->user_picture($face, array('size' => 75, 'class' => 'welcome_userpicture')), $face->firstname . ' ' . $face->lastname, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ');
+		    $userdatas[] = $userdata;
                 $outputHTML .=  printSingleFace($face->userid, $cid);
                 array_shift($result);
                     if ($k++ == $usersPerTable) break;
@@ -136,6 +139,14 @@ function renderGroup(){
         
 
 	$outputHTML .= '</tr></table>';
+
+$table->head = array('Photo', 'Name', 'Absences', 'Date', ' ', ' ', ' ', ' ', ' ', ' ', ' ');
+$table->data = $userdatas;
+
+echo html_writer::table($table);
+
+
+
 	$outputHTML .= '<p class="center disclaimer">'. get_string('disclaimer', 'block_signinsheet').'</p>';
               //}
           }
@@ -159,10 +170,16 @@ function printSingleFace($uid, $cid){
 	$picOutput = '';
 	
 	global $PAGE; 
+
+	
+        
+
+        $userpic = $OUTPUT->user_picture($singleRec, array('size' => 75, 'class' => 'welcome_userpicture'));
 	
 	$outputHTML =  '
 	<tr>
-		<td class="rolldata-rb">' . $firstName . ' ' . $lastname . '</td>';
+
+		<td class="rolldata-rb">' . $userpic . $firstName . ' ' . $lastname . '</td>';
 
 	$addFieldEnabled = get_config('block_signinsheet', 'includecustomfield');
 	
