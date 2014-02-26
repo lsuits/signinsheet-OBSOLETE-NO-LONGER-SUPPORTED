@@ -97,7 +97,7 @@ function buildMenu($cid){
 	$orderBy = '';
 	$orderBy = optional_param('orderby', '', PARAM_TEXT);
 
-	$outputHTML = '<div class = "floatright"><form action="'.$CFG->wwwroot. '/blocks/signinsheet/genlist/show.php?cid='.$cid.'" method="post">
+	$outputHTML = '<div class = "floatright"><form action="'.$CFG->wwwroot. '/blocks/signinsheet/genpics/show.php?cid='.$cid.'" method="post">
 				 Order By: <select name="orderby" id="orderby">
 								<option value="firstname">' .get_string('firstname', 'block_signinsheet').'</option>
 								<option value="lastname">'.get_string('lastname', 'block_signinsheet').'</option>
