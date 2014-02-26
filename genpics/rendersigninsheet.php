@@ -9,9 +9,7 @@ require_login();
  * */ 
 function renderPicSheet(){
 	global $DB, $cid, $CFG, $OUTPUT;
-        $pageCounter = 0;
-        $userPicture = '';
-        $j = 0;
+        $pageCounter = 1;
         $usersPerRow = get_config('block_signinsheet', 'columnsPerRow');
         $rowsPerPage = get_config('block_signinsheet', 'rowsPerPage');
 	$cid = required_param('cid', PARAM_INT);
@@ -54,24 +52,29 @@ function renderPicSheet(){
                                 WHERE r.shortname = "student" AND c.id = ?' . $appendOrder;
                 $result = $DB->get_records_sql($query, array($cid));
 	}
-	$courseName = $DB->get_record('course', array('id'=>$cid), 'fullname', $strictness=IGNORE_MISSING); 
-
-        while(!empty($result)){
-            $pageCounter++;
+	$courseName = $DB->get_record('course', array('id'=>$cid), 'fullname', $strictness=IGNORE_MISSING);
 
         $parentDivOpen = html_writer::start_tag('div', array('class' => 'placeholder'));
         $parentDivClose = html_writer::end_tag('div');
         $rowDivOpen = html_writer::start_tag('div', array('class' => 'ROWplaceholder'));
-        $title = html_writer::div(html_writer::tag('p',$courseName->fullname . ' &mdash; ' . get_string('signaturesheet', 'block_signinsheet') . ': page ' . $pageCounter), NULL, array('class' => 'rolltitle center'));
+
         $disclaimer = html_writer::tag('p',get_string('disclaimer', 'block_signinsheet'), array('class' => 'center disclaimer'));
+
+        while(!empty($result)){
+            $title = html_writer::div(html_writer::tag('p',$courseName->fullname . ' &mdash; ' . get_string('signaturesheet', 'block_signinsheet') . ': page ' . $pageCounter), NULL, array('class' => 'rolltitle center'));
+            $pageCounter++;
+            $userPicture ='';
+            $j = 0;
 
 	    foreach($result as $face){
 		$j++;
 		$userPicture .= html_writer::div($OUTPUT->user_picture($face, array('size' => 100, 'class' => 'welcome_userpicture')) . html_writer::tag('p',$face->firstname . ' ' . $face->lastname, array('class' => 'center')), NULL, array('class' => 'floatleft'));
+		array_shift($result);
+		if ($j == 30) { break; }
             }
-array_shift($result);
+
             echo $title;
             echo $userPicture;
             echo $disclaimer;
-}
+            }
 }
