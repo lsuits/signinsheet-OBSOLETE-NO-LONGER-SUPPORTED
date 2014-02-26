@@ -69,6 +69,7 @@ function renderPicSheet(){
 		$j++;
 		$userPicture .= html_writer::div($OUTPUT->user_picture($face, array('size' => 100, 'class' => 'welcome_userpicture')) . html_writer::tag('p',$face->firstname . ' ' . $face->lastname, array('class' => 'center')), NULL, array('class' => 'floatleft'));
             }
+array_shift($result);
             echo $title;
             echo $userPicture;
             echo $disclaimer;

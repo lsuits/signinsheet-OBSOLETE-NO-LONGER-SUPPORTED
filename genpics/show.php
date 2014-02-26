@@ -160,5 +160,28 @@ $mform = new signinsheet_form();
 $mform->focus();
 $mform->display();		
 
+$selectgroupsec = optional_param('selectgroupsec', '', PARAM_TEXT);
+        if(isset($selectgroupsec)){
+            $selectedItem = $selectgroupsec;
+            echo '<script>
+                        document.getElementById("selectgroupsec").value = '.$selectedItem.';
+            </script>';
+         }
+
+ $orderBy = optional_param('orderby', '', PARAM_TEXT);
+        if(isset($orderBy)){
+        $orderItem = $orderBy;
+                echo '<script>
+                                document.getElementById("orderby").value = "'.$orderItem.'"
+                          </script>';
+
+                          if($orderItem == ""){
+                                echo '<script>
+                                document.getElementById("orderby").value = "firstname";
+                          </script>';
+
+                          }
+        }
+
         echo $OUTPUT->footer();
 
