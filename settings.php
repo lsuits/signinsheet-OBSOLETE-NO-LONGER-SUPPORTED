@@ -12,44 +12,42 @@ $uploaderLink = new moodle_url('/blocks/signinsheet/index.php');
      new lang_string('hidefromstudents', 'block_signinsheet'),
         new lang_string('hidefromstudents_desc', 'block_signinsheet') , null,
          PARAM_INT));
-  
     
-	 
-
-    
+/*
 	global $DB;
 	$result = $DB->get_records('user_info_field');
-
   if($result){
    $settings->add(new admin_setting_configcheckbox('block_signinsheet/includecustomfield',
      new lang_string('customfield', 'block_signinsheet'),
         new lang_string('customfielddesc', 'block_signinsheet') , null,
          PARAM_INT));
-
     	$options = array();
     	foreach ($result as $item){
     		$options[$item->id] = $item->name;
     	}
-
     $settings->add(new admin_setting_configselect('block_signinsheet/customfieldselect', 
     				 new lang_string('customfieldselect', 'block_signinsheet'),
                        get_string('selectcustomfield', 'block_signinsheet'), null, $options));
-
   }
+*/
 
- $settings->add(new admin_setting_configcheckbox('block_signinsheet/includecustomtextfield',
-     new lang_string('includecustomtextfield', 'block_signinsheet'),
-        new lang_string('includecustomtextfielddesc', 'block_signinsheet') , null,
-         PARAM_INT));
+    $settings->add(new admin_setting_configcheckbox('block_signinsheet/includecustomtextfield',
+	new lang_string('includecustomtextfield', 'block_signinsheet'),
+        new lang_string('includecustomtextfielddesc', 'block_signinsheet') , null, PARAM_INT));
 
-   $settings->add(new admin_setting_configtext('block_signinsheet/customtext', get_string('customtext', 'block_signinsheet'), get_string('customtextdesc', 'block_signinsheet'), null, PARAM_TEXT));
+    $settings->add(new admin_setting_configtext('block_signinsheet/customtext', get_string('customtext', 'block_signinsheet'), get_string('customtextdesc', 'block_signinsheet'), null, PARAM_TEXT));
 
- $settings->add(new admin_setting_configcheckbox('block_signinsheet/includeidfield',
-     new lang_string('idfield', 'block_signinsheet'),
-        new lang_string('idfielddesc', 'block_signinsheet') , null,
-         PARAM_INT));
+    $settings->add(new admin_setting_configcheckbox('block_signinsheet/includeidfield',
+    new lang_string('idfield', 'block_signinsheet'),
+    new lang_string('idfielddesc', 'block_signinsheet') , null, PARAM_INT));
 
 
-    $settings->add(new admin_setting_configtext('block_signinsheet/studentsPerPage', get_string('studentsPerPage', 'block_signinsheet'),null, null, PARAM_TEXT));
+    $settings->add(new admin_setting_configtext('block_signinsheet/studentsPerPage', get_string('studentsPerPage', 'block_signinsheet'),null, null, PARAM_INT));
+
+    $settings->add(new admin_setting_configtext('block_signinsheet/numExtraFields', get_string('numExtraFields', 'block_signinsheet'),null, null, PARAM_INT));
+
+    $settings->add(new admin_setting_configtext('block_signinsheet/columnsPerRow', get_string('columnsPerRow', 'block_signinsheet'),null, null, PARAM_INT));
+
+    $settings->add(new admin_setting_configtext('block_signinsheet/rowsPerPage', get_string('rowsPerPage', 'block_signinsheet'),null, null, PARAM_INT));
 
   

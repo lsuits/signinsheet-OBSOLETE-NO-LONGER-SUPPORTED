@@ -21,12 +21,12 @@ if (has_capability('block/signinsheet:viewblock', $context)) {
 	$renderType = optional_param('rendertype', '', PARAM_TEXT);
 	if(isset($renderType)){
 		if($renderType == 'all' || $renderType == ''){
-	                echo renderGroup($usersPerTable);
+	                echo renderRollsheet($usersPerTable);
 		} else if($renderType == 'group') {
-			echo renderGroup($usersPerTable);
+			echo renderRollsheet($usersPerTable);
 		}
 	} else {
-		renderGroup($usersPerTable);
+		renderRollsheet($usersPerTable);
 	}
 
 	echo $OUTPUT->footer();

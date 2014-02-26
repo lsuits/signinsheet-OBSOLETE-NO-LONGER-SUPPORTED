@@ -74,7 +74,7 @@ if($logoEnabled){
 // Render the page
 $selectgroupsec = optional_param('selectgroupsec', '', PARAM_TEXT);   
 if (has_capability('mod/glossary:approve', $context)) {
-echo renderRollsheet();
+echo renderPicSheet();
 }
 
 class signinsheet_form extends moodleform {

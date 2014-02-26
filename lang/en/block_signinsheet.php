@@ -15,6 +15,7 @@ $string['printbutton'] = 'Print RollSheet';
 
 $string['firstname'] = 'First Name';
 $string['lastname'] = 'Last Name';
+$string['fullName'] = 'Name';
 
 
 $string['fieldtitledesc'] = 'Title of the field to be displayed at top of column e.g. Student Number';
@@ -40,6 +41,7 @@ $string['includeidfield'] = 'Include ID Field';
 $string['customfielddesc'] = 'Include a custom field in the sheet';
 $string['selectcustomfield'] = 'Select custom field to include';
 $string['includecustomtextfield'] = 'Include Custom text field';
+$string['numExtraFields'] = '# of extra blank fields';
 $string['customtext'] = 'Custom Text';
 $string['customtextdesc'] = 'Custom Text to include at top of sheet';
 $string['includecustomtextfielddesc'] = 'Include Custom text field';
@@ -55,4 +57,6 @@ $string['idnumber'] = 'ID Number';
 $string['teacher'] = 'Primary Instructor';
 $string['room'] = 'Room #';
 $string['disclaimer'] = '"Falsifying information on a class roll sheet in any manner..." is a violation of the Code of Student Professional Responsibility.';
-$string['studentsPerPage'] ='Enter the number of students you want printed per page.'; 
+$string['studentsPerPage'] ='Students per page'; 
+$string['rowsPerPage'] ='Photo rows per page'; 
+$string['columnsPerRow'] ='Photos per row';
