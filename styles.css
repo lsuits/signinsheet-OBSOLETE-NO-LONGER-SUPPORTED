@@ -10,7 +10,7 @@
  width: 100%;
 }
 .path-blocks-signinsheet .borderless td {
-  font-size: 10px;
+  font-size: 9px;
   text-align: left !important;
   padding: 0 10px;
 }
@@ -24,8 +24,13 @@
   padding: 0;
 }
 
-.path-blocks-signinsheet .disclaimer {
+.path-blocks-signinsheet .absences {
+  margin: 0 20px;
   font-size: 10px;
+  font-weight: bold;
+}
+.path-blocks-signinsheet .disclaimer {
+  font-size: 9px;
 }
 
 .path-blocks-signinsheet .center {
@@ -33,7 +38,9 @@
 }
 
 .path-blocks-signinsheet .rolltitle {
-  font-size: 18px;
+  font-size: 12px;
+  font-weight: bold;
+  margin: 10px auto;
 }
 
 .path-blocks-signinsheet .rollcourse {
@@ -41,7 +48,7 @@
 }
 
 .path-blocks-signinsheet .rollgroup {
-  font-size: 20px;
+  font-size: 10px;
 }
 
 .path-blocks-signinsheet .printHeaderLogo {
@@ -49,36 +56,29 @@
 }
 
 .path-blocks-signinsheet table.roll {
-  font-size: 11px;
+  font-size: 10px;
   width: 99%;
   margin: 10px auto;;
   border: 1px solid #000000;
   background-color: #ffffff;
 }
 
-.path-blocks-signinsheet table.roll tr:nth-child(even) td {
+.path-blocks-signinsheet table.roll tr:nth-child(odd) td {
   background-color: #dddddd;
 }
 
 .path-blocks-signinsheet table.roll th {
   border: 1px solid #000000;
-  color: #fff;
-  background-color: #666;
+  color: #333;
+  background-color: #fff;
   font-weight: bold;
+  height: 40px;
+  vertical-align: bottom;
 }
 
 .path-blocks-signinsheet table.roll td {
   border: 1px solid #000000;
-  height: 2em;
   vertical-align: middle;
-}
-
-.path-blocks-signinsheet .ten-percent {
-  width: 10%;
-}
-
-.path-blocks-signinsheet .thirty {
-  width: 30%;
 }
 
 .path-blocks-signinsheet p.center.disclaimer {
@@ -97,14 +97,22 @@
 }
 .path-blocks-signinsheet div.floatleft {
   display: inline-block;
-  padding: 10px;
-  width: 15%;
+  padding: 5px 0 0 0;
+  margin: 10px;
+  width: 150px;
+  height: 182px;
   text-align: center;
+  background-color: #fff;
+  box-shadow: 0 0 10px #aaa;
+  vertical-align: top;
+  border: 1px solid #ccc;
 }
 
 
 .path-blocks-signinsheet div.floatleft img {
   margin: auto;
+  border: 1px solid #ccc;
+  margin: 5px auto;
 }
 
 .path-blocks-signinsheet div.floatleft p {

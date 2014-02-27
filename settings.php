@@ -46,8 +46,4 @@ $uploaderLink = new moodle_url('/blocks/signinsheet/index.php');
 
     $settings->add(new admin_setting_configtext('block_signinsheet/numExtraFields', get_string('numExtraFields', 'block_signinsheet'),null, null, PARAM_INT));
 
-    $settings->add(new admin_setting_configtext('block_signinsheet/columnsPerRow', get_string('columnsPerRow', 'block_signinsheet'),null, null, PARAM_INT));
-
-    $settings->add(new admin_setting_configtext('block_signinsheet/rowsPerPage', get_string('rowsPerPage', 'block_signinsheet'),null, null, PARAM_INT));
-
-  
+    $settings->add(new admin_setting_configtext('block_signinsheet/usersPerPage', get_string('usersPerPage', 'block_signinsheet'),null, null, PARAM_INT));

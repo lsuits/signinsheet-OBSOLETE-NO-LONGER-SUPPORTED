@@ -112,7 +112,7 @@ function buildMenu($cid){
 				
 				<span class = "floatright">
 				
-				<form action="../print/page.php" target="_blank">
+				<form action="../print/pics.php" target="_blank">
    				<input type="hidden" name="cid" value="'.$cid.'">
 				<input type="hidden" name="rendertype" value="'.$renderType.'">
 				

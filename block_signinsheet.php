@@ -1,56 +1,45 @@
 <?php
-
-class block_signinsheet extends block_base {
+class block_signinsheet extends block_list {
     function init() {
 
         $this->title = get_string('pluginname', 'block_signinsheet');
-        $plugin = new stdClass();
-        $plugin->version = 2013090213;      // The current module version (Date: YYYYMMDDXX)
-        $plugin->requires = 2011070110.00;      // Requires this Moodle version
     }
 
     function has_config() {
         return true;
     }
-
-    function get_content() {
-        if ($this->content !== NULL) {
-            return $this->content;
-        }
-
-        global $CFG;
-        global $COURSE;
-        global $DB;
-
-        $this->content = new stdClass;
-
-        $blockHidden = get_config('block_signinsheet', 'hidefromstudents');
-
-        //
-        // If the admin has selected to hide from students
-        //
-	if (!empty($blockHidden)) {
-            if (has_capability('block/signinsheet:viewblock', $this->context)) {
-
-                $this->content->text = getSignInNav();
-            } else {
-
-            }
-        } else {
-            $this->content->text = getSignInNav();
-        }
-
-
-        $this->content->footer = '';
-
+function get_content() {
+    if ($this->content !== NULL) {
         return $this->content;
     }
 
-}
+    global $PAGE, $COURSE, $OUTPUT, $CFG;
 
-function getSignInNav() {
-    global $USER, $DB, $CFG;
+    $context = get_context_instance(CONTEXT_COURSE, $COURSE->id);
+
+    $blockHidden = get_config('block_signinsheet', 'hidefromstudents');
+
+    $permission = (
+        has_capability('moodle/site:accessallgroups', $context) or
+        has_capability('block/ues_people:viewmeta', $context)
+    );
+
+    $content = new stdClass;
+    $content->items = array();
+    $content->icons = array();
+    $content->footer = '';
+    $this->content = $content;
+    $icon_class = array('class' => 'icon');
     $cid = optional_param('id', '', PARAM_INT);
-    $bodyHTML = '<img src="' . $CFG->wwwroot . '/blocks/signinsheet/printer.gif"/> <a href="' . $CFG->wwwroot . '/blocks/signinsheet/genlist/show.php?cid=' . $cid . '">' . get_string('genlist', 'block_signinsheet') . '</a><br>';
-    return $bodyHTML;
+    $sheetstr = get_string('genlist', 'block_signinsheet');
+    $picstr = get_string('genpics', 'block_signinsheet');
+    $sheeturl = new moodle_url('/blocks/signinsheet/genlist/show.php', array('cid' => $COURSE->id));
+    $picurl = new moodle_url('/blocks/signinsheet/genpics/show.php', array('cid' => $COURSE->id));
+    $content->items[] = html_writer::link($sheeturl, $sheetstr);
+    $content->items[] = html_writer::link($picurl, $picstr);
+    $content->icons[] = $OUTPUT->pix_icon('i/users', $sheetstr, 'moodle', $icon_class);
+    $content->icons[] = $OUTPUT->pix_icon('i/users', $picstr, 'moodle', $icon_class);
+
+    return $this->content;
+}
 }

@@ -19,7 +19,8 @@ $string['fullName'] = 'Name';
 
 
 $string['fieldtitledesc'] = 'Title of the field to be displayed at top of column e.g. Student Number';
-$string['genlist'] = 'Generate sign in sheet';
+$string['genlist'] = 'Generate rollsheets';
+$string['genpics'] = 'Generate photo sheets';
 
 $string['description'] = 'Description';
 
@@ -47,6 +48,7 @@ $string['customtextdesc'] = 'Custom Text to include at top of sheet';
 $string['includecustomtextfielddesc'] = 'Include Custom text field';
 $string['selectlogo'] = 'Select Logo';
 $string['signaturesheet'] = 'Class RollSheet';
+$string['picturesheet'] = 'Class Photo Roll';
 $string['signinsheet:view'] = 'View';
 $string['hidefromstudents'] = 'Hide Block From Students';
 $string['hidefromstudents_desc'] = 'When hidden, students will not be able to see the block (site wide)';
@@ -56,7 +58,8 @@ $string['idfielddesc'] = 'Include Moodle Student ID field';
 $string['idnumber'] = 'ID Number';
 $string['teacher'] = 'Primary Instructor';
 $string['room'] = 'Room #';
+$string['absences'] = 'Maximum absences allowed for this course is ________.';
 $string['disclaimer'] = '"Falsifying information on a class roll sheet in any manner..." is a violation of the Code of Student Professional Responsibility.';
+$string['pdisclaimer'] = 'Please do not violate FERPA or LSU PS-30.';
 $string['studentsPerPage'] ='Students per page'; 
-$string['rowsPerPage'] ='Photo rows per page'; 
-$string['columnsPerRow'] ='Photos per row';
+$string['usersPerPage'] ='Photos per page'; 

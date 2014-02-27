@@ -44,7 +44,7 @@ function renderRollsheet(){
 	// Check if we need to include a custom field
 	$groupName = $DB->get_record('groups', array('id'=>$selectedGroupId), $fields='*', $strictness=IGNORE_MISSING); 
         if($groupName) {
-                $query = 'SELECT u.id, gm.id, gm.groupid, gm.userid, r.shortname, u.firstname, u.lastname, u.picture, u.imagealt, u.email, u.idnumber
+                $query = 'SELECT u.id, u.firstname, u.lastname, u.picture, u.imagealt, u.email, u.idnumber
                                 FROM {course} AS c
                                 INNER JOIN {context} AS cx ON c.id = cx.instanceid AND cx.contextlevel = "50"
                                 INNER JOIN {role_assignments} AS ra ON cx.id = ra.contextid
@@ -65,8 +65,6 @@ function renderRollsheet(){
                 $result = $DB->get_records_sql($query, array($cid));
 	}
 
-	$date = date('m-d-y');
-
 	$courseName = $DB->get_record('course', array('id'=>$cid), 'fullname', $strictness=IGNORE_MISSING); 
 
         $totalUsers = count($result);
@@ -74,12 +72,15 @@ function renderRollsheet(){
         while(!empty($result)){
             $pageCounter++;
 
-	$title = html_writer::div(html_writer::tag('p',$courseName->fullname . ' &mdash; ' . get_string('signaturesheet', 'block_signinsheet') . ': page ' . $pageCounter), NULL, array('class' => 'rolltitle center'));
+            if($groupName) {
+                $title = html_writer::div(html_writer::tag('p',get_string('signaturesheet', 'block_signinsheet') . ' &mdash; ' . $courseName->fullname . ': Section ' . substr($groupName->name, -3) . '&nbsp;&nbsp;&nbsp;&nbsp;Page: ' . $pageCounter . '&nbsp;&nbsp;&nbsp;&nbsp;Room # _____'), NULL, array('class' => 'rolltitle center'));
+            } else {
+                $title = html_writer::div(html_writer::tag('p',get_string('signaturesheet', 'block_signinsheet') . ' &mdash; ' . $courseName->fullname . '&nbsp;&nbsp;&nbsp;&nbsp;Page: ' . $pageCounter . '&nbsp;&nbsp;&nbsp;&nbsp;Room # _____'), NULL, array('class' => 'rolltitle center'));
+            }
 
-	$disclaimer = html_writer::tag('p',get_string('disclaimer', 'block_signinsheet'), array('class' => 'center disclaimer'));
+	    $disclaimer = html_writer::tag('p',get_string('absences', 'block_signinsheet'), array('class' => 'absences'));
+	    $disclaimer .= html_writer::tag('p',get_string('disclaimer', 'block_signinsheet'), array('class' => 'center disclaimer'));
 	
-	$colCounter = 0;
-	$totalRows = 0;
             $k = 1;
 	    $table = new html_table();
 	    $table->attributes['class'] = 'roll';
@@ -147,4 +148,3 @@ function renderRollsheet(){
         echo $disclaimer;
     }
 }
-// FOR GRABBING PICS $OUTPUT->user_picture($face, array('size' => 75, 'class' => 'welcome_userpicture'))

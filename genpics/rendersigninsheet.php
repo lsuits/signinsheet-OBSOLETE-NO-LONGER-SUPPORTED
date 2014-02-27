@@ -10,8 +10,7 @@ require_login();
 function renderPicSheet(){
 	global $DB, $cid, $CFG, $OUTPUT;
         $pageCounter = 1;
-        $usersPerRow = get_config('block_signinsheet', 'columnsPerRow');
-        $rowsPerPage = get_config('block_signinsheet', 'rowsPerPage');
+        $usersPerPage = get_config('block_signinsheet', 'usersPerPage');
 	$cid = required_param('cid', PARAM_INT);
 	$selectedGroupId = optional_param('selectgroupsec', '', PARAM_INT);
 	$appendOrder = '';
@@ -32,7 +31,7 @@ function renderPicSheet(){
 	// Check if we need to include a custom field
 	$groupName = $DB->get_record('groups', array('id'=>$selectedGroupId), $fields='*', $strictness=IGNORE_MISSING); 
         if($groupName) {
-                $query = 'SELECT u.id, gm.id, gm.groupid, gm.userid, r.shortname, u.firstname, u.lastname, u.picture, u.imagealt, u.email, u.idnumber
+                $query = 'SELECT u.id, u.id AS userid, u.firstname, u.lastname, u.picture, u.imagealt, u.email, u.idnumber
                                 FROM {course} AS c
                                 INNER JOIN {context} AS cx ON c.id = cx.instanceid AND cx.contextlevel = "50"
                                 INNER JOIN {role_assignments} AS ra ON cx.id = ra.contextid
@@ -58,19 +57,25 @@ function renderPicSheet(){
         $parentDivClose = html_writer::end_tag('div');
         $rowDivOpen = html_writer::start_tag('div', array('class' => 'ROWplaceholder'));
 
-        $disclaimer = html_writer::tag('p',get_string('disclaimer', 'block_signinsheet'), array('class' => 'center disclaimer'));
+        $disclaimer = html_writer::tag('p',get_string('pdisclaimer', 'block_signinsheet'), array('class' => 'center disclaimer'));
 
         while(!empty($result)){
-            $title = html_writer::div(html_writer::tag('p',$courseName->fullname . ' &mdash; ' . get_string('signaturesheet', 'block_signinsheet') . ': page ' . $pageCounter), NULL, array('class' => 'rolltitle center'));
+
+            if($groupName) {
+                $title = html_writer::div(html_writer::tag('p',$courseName->fullname . ' ' . substr($groupName->name, -3) . ' &mdash; ' . get_string('picturesheet', 'block_signinsheet') . ': page ' . $pageCounter), NULL, array('class' => 'rolltitle center'));
+	    } else {
+                $title = html_writer::div(html_writer::tag('p',$courseName->fullname . ' &mdash; ' . get_string('picturesheet', 'block_signinsheet') . ': page ' . $pageCounter), NULL, array('class' => 'rolltitle center'));
+	    }
+
             $pageCounter++;
             $userPicture ='';
             $j = 0;
 
 	    foreach($result as $face){
 		$j++;
-		$userPicture .= html_writer::div($OUTPUT->user_picture($face, array('size' => 100, 'class' => 'welcome_userpicture')) . html_writer::tag('p',$face->firstname . ' ' . $face->lastname, array('class' => 'center')), NULL, array('class' => 'floatleft'));
+		$userPicture .= html_writer::div($OUTPUT->user_picture($face, array('size' => 130, 'class' => 'welcome_userpicture')) . html_writer::tag('p',$face->firstname . ' ' . $face->lastname, array('class' => 'center')), NULL, array('class' => 'floatleft'));
 		array_shift($result);
-		if ($j == 30) { break; }
+		if ($j == $usersPerPage) { break; }
             }
 
             echo $title;
