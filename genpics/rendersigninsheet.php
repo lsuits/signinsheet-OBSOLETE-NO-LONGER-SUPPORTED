@@ -30,6 +30,10 @@ function renderPicSheet(){
 
 	// Check if we need to include a custom field
 	$groupName = $DB->get_record('groups', array('id'=>$selectedGroupId), $fields='*', $strictness=IGNORE_MISSING); 
+        $groupids = groups_get_user_groups($cid);
+        $groupids = $groupids[0]; // ignore groupings
+        $groupids = implode(",", $groupids);
+        $context = get_context_instance(CONTEXT_COURSE, $cid);
         if($groupName) {
                 $query = 'SELECT u.id, u.id AS userid, u.firstname, u.lastname, u.picture, u.imagealt, u.email, u.idnumber
                                 FROM {course} AS c
@@ -41,6 +45,17 @@ function renderPicSheet(){
                                 INNER JOIN {groups} AS g ON gm.groupid = g.id AND c.id = g.courseid
                                 WHERE r.shortname = "student" AND gm.groupid = ?' . $appendOrder;
                 $result = $DB->get_records_sql($query,array($selectedGroupId));
+        } else if (!has_capability('moodle/site:accessallgroups', $context)) {
+                $query = 'SELECT CONCAT(u.id, g.id) AS groupuserid, u.id, u.firstname, u.lastname, u.picture, u.imagealt, u.email, u.idnumber
+                                FROM {course} AS c
+                                INNER JOIN {context} AS cx ON c.id = cx.instanceid AND cx.contextlevel = "50"
+                                INNER JOIN {role_assignments} AS ra ON cx.id = ra.contextid
+                                INNER JOIN {role} AS r ON ra.roleid = r.id
+                                INNER JOIN {user} AS u ON ra.userid = u.id
+                                INNER JOIN {groups_members} AS gm ON u.id = gm.userid
+                                INNER JOIN {groups} AS g ON gm.groupid = g.id AND c.id = g.courseid
+                                WHERE r.shortname = "student" AND gm.groupid IN (' . $groupids . ') ' . $appendOrder;
+                $result = $DB->get_records_sql($query, array($cid));
         } else {
                 $query = 'SELECT u.id, u.id AS userid, u.firstname, u.lastname, u.picture, u.imagealt, u.email, u.idnumber
                                 FROM {course} AS c
@@ -73,7 +88,7 @@ function renderPicSheet(){
 
 	    foreach($result as $face){
 		$j++;
-		$userPicture .= html_writer::div($OUTPUT->user_picture($face, array('size' => 130, 'class' => 'welcome_userpicture')) . html_writer::tag('p',$face->firstname . ' ' . $face->lastname, array('class' => 'center')), NULL, array('class' => 'floatleft'));
+		$userPicture .= html_writer::div($OUTPUT->user_picture($face, array('courseid' => $cid, 'size' => 100, 'class' => 'welcome_userpicture')) . html_writer::tag('p',$face->firstname . ' ' . $face->lastname, array('class' => 'center')), NULL, array('class' => 'floatleft'));
 		array_shift($result);
 		if ($j == $usersPerPage) { break; }
             }

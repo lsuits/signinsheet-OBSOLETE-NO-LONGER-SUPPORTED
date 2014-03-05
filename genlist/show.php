@@ -61,7 +61,7 @@ $PAGE->set_heading(get_string('pluginname', 'block_signinsheet'));
 $PAGE->set_title(get_string('pluginname', 'block_signinsheet'));
 
 echo $OUTPUT->header();
-if (has_capability('mod/glossary:approve', $context)) {
+if (has_capability('block/signinsheet:viewblock', $context)) {
 echo buildMenu($cid);
 }
 
@@ -73,7 +73,7 @@ if($logoEnabled){
 
 // Render the page
 $selectgroupsec = optional_param('selectgroupsec', '', PARAM_TEXT);   
-if (has_capability('mod/glossary:approve', $context)) {
+if (has_capability('block/signinsheet:viewblock', $context)) {
 echo renderRollsheet();
 }
 
@@ -143,11 +143,21 @@ function buildMenu($cid){
  * 
  */
 function buildGroups($cid){
-	
-	global $DB;
-	
+        global $DB;
+        $warnings = array();
+        $groups       = array();
+        $context = get_context_instance(CONTEXT_COURSE, $cid);
 	$buildHTML = '';
-	$groups = $DB->get_records('groups',array('courseid'=>$cid));
+
+        if (!has_capability('moodle/site:accessallgroups', $context)) {
+            $groupids = groups_get_user_groups($cid);
+            $groupids = $groupids[0]; // ignore groupings
+            $groupids = implode(",", $groupids);
+            $select = "id IN ($groupids)";
+            $groups = $DB->get_records_select('groups',$select);
+        } else {
+            $groups = $DB->get_records('groups',array('courseid'=>$cid));
+        }
 
 	foreach($groups as $group){
 		$groupId = $group->id;

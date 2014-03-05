@@ -119,3 +119,8 @@
   height: 3em;
   vertical-align: top;
 }
+
+.path-blocks-signinsheet img.welcome_userpicture {
+  width: 130px;
+  height: 130px;
+}
