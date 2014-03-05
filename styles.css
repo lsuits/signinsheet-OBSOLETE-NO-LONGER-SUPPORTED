@@ -119,10 +119,6 @@
     -webkit-filter:opacity(1);
 }
 
-.path-blocks-signinsheet.ie div.floatleft {
-  border: 1px solid #000;
-}
-
 .path-blocks-signinsheet.safari div.floatleft {
   margin: 10px 15px;
 }
