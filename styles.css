@@ -1,6 +1,8 @@
-.path-blocks-signinsheet div#page {
+.path-blocks-signinsheet.pagelayout-print div#page {
   background-color: #fff !important;
   text-align: center;
+  margin: 0;
+  padding: 0;
 }
 
 .path-blocks-signinsheet .titles {
@@ -89,6 +91,10 @@
   font-size: 10px;
 }
 
+.path-blocks-signinsheet.pagelayout-print p.center.disclaimer {
+  margin-bottom: 0px;
+}
+
 .path-blocks-signinsheet div.floatright {
   width: 95%;
   margin: 0 10px 0 auto;
@@ -105,8 +111,16 @@
   text-align: center;
   background-color: #fff;
   box-shadow: 0 0 10px #aaa;
+  -ms-box-shadow: 0 0 10px #aaa;
+  -webkit-box-shadow: 0 0 10px #aaa;
   vertical-align: top;
   border: 1px solid #ccc;
+    -webkit-print-color-adjust: exact;
+    -webkit-filter:opacity(1);
+}
+
+.path-blocks-signinsheet.ie div.floatleft {
+  border: 1px solid #000;
 }
 
 .path-blocks-signinsheet.safari div.floatleft {
