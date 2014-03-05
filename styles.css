@@ -1,5 +1,6 @@
 .path-blocks-signinsheet div#page {
   background-color: #fff !important;
+  text-align: center;
 }
 
 .path-blocks-signinsheet .titles {
@@ -97,10 +98,10 @@
 }
 .path-blocks-signinsheet div.floatleft {
   display: inline-block;
-  padding: 5px 0 0 0;
-  margin: 10px;
-  width: 150px;
-  height: 182px;
+  padding: 0;
+  margin: 5px;
+  width: 140px;
+  height: 172px;
   text-align: center;
   background-color: #fff;
   box-shadow: 0 0 10px #aaa;
@@ -108,11 +109,13 @@
   border: 1px solid #ccc;
 }
 
+.path-blocks-signinsheet.safari div.floatleft {
+  margin: 10px 15px;
+}
 
 .path-blocks-signinsheet div.floatleft img {
-  margin: auto;
   border: 1px solid #ccc;
-  margin: 5px auto;
+  margin: 10px;
 }
 
 .path-blocks-signinsheet div.floatleft p {
@@ -121,6 +124,6 @@
 }
 
 .path-blocks-signinsheet img.welcome_userpicture {
-  width: 130px;
-  height: 130px;
+  width: 120px;
+  height: 120px;
 }
