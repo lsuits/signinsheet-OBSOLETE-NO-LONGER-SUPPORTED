@@ -105,7 +105,7 @@
   display: inline-block;
   padding: 0;
   margin: 5px;
-  width: 140px;
+  min-width: 140px;
   height: 172px;
   text-align: center;
   background-color: #fff;
@@ -124,12 +124,15 @@
 
 .path-blocks-signinsheet div.floatleft img {
   border: 1px solid #ccc;
-  margin: 10px;
+  margin: 10px 10px 7px 10px;
 }
 
 .path-blocks-signinsheet div.floatleft p {
   height: 3em;
   vertical-align: top;
+  white-space: nowrap;
+  padding: 0 5px;
+  margin: 0;
 }
 
 .path-blocks-signinsheet img.welcome_userpicture {
