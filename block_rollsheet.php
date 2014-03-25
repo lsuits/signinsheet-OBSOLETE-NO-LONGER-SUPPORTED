@@ -1,7 +1,7 @@
 <?php
-class block_signinsheet extends block_list {
+class block_rollsheet extends block_list {
     function init() {
-        $this->title = get_string('pluginname', 'block_signinsheet');
+        $this->title = get_string('pluginname', 'block_rollsheet');
     }
 
     function has_config() {
@@ -16,10 +16,10 @@ class block_signinsheet extends block_list {
         global $PAGE, $COURSE, $OUTPUT, $CFG;
         $context = get_context_instance(CONTEXT_COURSE, $COURSE->id);
         $permission = (
-            has_capability('block/signinsheet:viewblock', $context)
+            has_capability('block/rollsheet:viewblock', $context)
         );
 
-        $blockHidden = get_config('block_signinsheet', 'hidefromstudents');
+        $blockHidden = get_config('block_rollsheet', 'hidefromstudents');
         $content = new stdClass;
         $content->items = array();
         $content->icons = array();
@@ -27,11 +27,11 @@ class block_signinsheet extends block_list {
         $this->content = $content;
         $icon_class = array('class' => 'icon');
         $cid = optional_param('id', '', PARAM_INT);
-        $sheetstr = get_string('genlist', 'block_signinsheet');
-        $picstr = get_string('genpics', 'block_signinsheet');
+        $sheetstr = get_string('genlist', 'block_rollsheet');
+        $picstr = get_string('genpics', 'block_rollsheet');
 
-        $sheeturl = new moodle_url('/blocks/signinsheet/genlist/show.php', array('cid' => $COURSE->id));
-        $picurl = new moodle_url('/blocks/signinsheet/genpics/show.php', array('cid' => $COURSE->id));
+        $sheeturl = new moodle_url('/blocks/rollsheet/genlist/show.php', array('cid' => $COURSE->id));
+        $picurl = new moodle_url('/blocks/rollsheet/genpics/show.php', array('cid' => $COURSE->id));
 
         $membergroups = groups_get_user_groups($COURSE->id);
         $membergroups = $membergroups[0];

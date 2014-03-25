@@ -2,7 +2,7 @@
 
 $capabilities = array(
  
-    'block/signinsheet:addinstance' => array(
+    'block/rollsheet:addinstance' => array(
         'riskbitmask' => RISK_SPAM | RISK_XSS,
 
         'captype' => 'write',
@@ -15,7 +15,7 @@ $capabilities = array(
         'clonepermissionsfrom' => 'moodle/site:manageblocks'
     ),
     
-	    'block/signinsheet:viewblock' => array(
+	    'block/rollsheet:viewblock' => array(
         'riskbitmask' => RISK_SPAM | RISK_XSS,
 
         'captype' => 'write',

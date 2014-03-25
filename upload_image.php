@@ -7,16 +7,16 @@ $formPath = "$CFG->libdir/formslib.php";
 require_once($formPath);
 
 $PAGE->navbar->ignore_active();
-$PAGE->navbar->add(get_string('settings', 'block_signinsheet'), new moodle_url('../../admin/settings.php?section=blocksettingsigninsheet'));
-$PAGE->navbar->add(get_string('uploadimage', 'block_signinsheet'));
+$PAGE->navbar->add(get_string('settings', 'block_rollsheet'), new moodle_url('../../admin/settings.php?section=blocksettingrollsheet'));
+$PAGE->navbar->add(get_string('uploadimage', 'block_rollsheet'));
 
 
 $PAGE->set_url('/blocks/cmanager/course_new.php');
 $PAGE->set_context(get_system_context());
-$PAGE->set_heading(get_string('pluginname', 'block_signinsheet'));
+$PAGE->set_heading(get_string('pluginname', 'block_rollsheet'));
 
 
- class signinsheet_uploader_form extends moodleform {
+ class rollsheet_uploader_form extends moodleform {
  
  
     function definition() {
@@ -33,15 +33,15 @@ $PAGE->set_heading(get_string('pluginname', 'block_signinsheet'));
 	}
 	
  }
-$mform = new signinsheet_uploader_form();
+$mform = new rollsheet_uploader_form();
 
 if ($mform->is_cancelled()) {
-   redirect(new moodle_url('/admin/settings.php?section=blocksettingsigninsheet'));
+   redirect(new moodle_url('/admin/settings.php?section=blocksettingrollsheet'));
 	
 } else if ($fromform = $mform->get_data()) {
 	
-$success = $mform->save_file('userfile', '/signinsheet', true);
-$storedfile = $mform->save_stored_file('userfile', 1, 'signinsheet', 'content', 0, '/', null, true);
+$success = $mform->save_file('userfile', '/rollsheet', true);
+$storedfile = $mform->save_stored_file('userfile', 1, 'rollsheet', 'content', 0, '/', null, true);
 // ---------------------------------------------------------------------------
 
 /*

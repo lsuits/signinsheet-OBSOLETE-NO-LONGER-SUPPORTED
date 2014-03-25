@@ -10,7 +10,7 @@ require_login();
  * */
 function printHeaderLogo(){
 	global $DB;
- 	$imageURL =  $DB->get_field('block_signinsheet', 'field_value', array('id'=>1), $strictness=IGNORE_MISSING);
+ 	$imageURL =  $DB->get_field('block_rollsheet', 'field_value', array('id'=>1), $strictness=IGNORE_MISSING);
 	echo '<img src="'.$imageURL.'"/><br><div class="printHeaderLogo"></div>';
 }
 
@@ -23,7 +23,7 @@ function printHeaderLogo(){
 function renderRollsheet(){
 	global $DB, $cid, $CFG, $OUTPUT;
         $pageCounter = 0;
-        $usersPerTable = get_config('block_signinsheet', 'studentsPerPage' );
+        $usersPerTable = get_config('block_rollsheet', 'studentsPerPage' );
 	$cid = required_param('cid', PARAM_INT);
 	$selectedGroupId = optional_param('selectgroupsec', '', PARAM_INT);
 	$appendOrder = '';
@@ -88,21 +88,21 @@ function renderRollsheet(){
             $pageCounter++;
 
             if($groupName) {
-                $title = html_writer::div(html_writer::tag('p',get_string('signaturesheet', 'block_signinsheet') . ' &mdash; ' . $courseName->fullname . ': Section ' . substr($groupName->name, -3) . '&nbsp;&nbsp;&nbsp;&nbsp;Page: ' . $pageCounter . '&nbsp;&nbsp;&nbsp;&nbsp;Room # _____'), NULL, array('class' => 'rolltitle center'));
+                $title = html_writer::div(html_writer::tag('p',get_string('signaturesheet', 'block_rollsheet') . ' &mdash; ' . $courseName->fullname . ': Section ' . substr($groupName->name, -3) . '&nbsp;&nbsp;&nbsp;&nbsp;Page: ' . $pageCounter . '&nbsp;&nbsp;&nbsp;&nbsp;Room # _____'), NULL, array('class' => 'rolltitle center'));
             } else {
-                $title = html_writer::div(html_writer::tag('p',get_string('signaturesheet', 'block_signinsheet') . ' &mdash; ' . $courseName->fullname . '&nbsp;&nbsp;&nbsp;&nbsp;Page: ' . $pageCounter . '&nbsp;&nbsp;&nbsp;&nbsp;Room # _____'), NULL, array('class' => 'rolltitle center'));
+                $title = html_writer::div(html_writer::tag('p',get_string('signaturesheet', 'block_rollsheet') . ' &mdash; ' . $courseName->fullname . '&nbsp;&nbsp;&nbsp;&nbsp;Page: ' . $pageCounter . '&nbsp;&nbsp;&nbsp;&nbsp;Room # _____'), NULL, array('class' => 'rolltitle center'));
             }
 
-	    $disclaimer = html_writer::tag('p',get_string('absences', 'block_signinsheet'), array('class' => 'absences'));
-	    $disclaimer .= html_writer::tag('p',get_string('disclaimer', 'block_signinsheet'), array('class' => 'center disclaimer'));
+	    $disclaimer = html_writer::tag('p',get_string('absences', 'block_rollsheet'), array('class' => 'absences'));
+	    $disclaimer .= html_writer::tag('p',get_string('disclaimer', 'block_rollsheet'), array('class' => 'center disclaimer'));
 	
             $k = 1;
 	    $table = new html_table();
 	    $table->attributes['class'] = 'roll';
 
-            $addTextField = get_config('block_signinsheet', 'includecustomtextfield');
-            $addIdField = get_config('block_signinsheet', 'includeidfield');
-            $numExtraFields = get_config('block_signinsheet', 'numExtraFields');
+            $addTextField = get_config('block_rollsheet', 'includecustomtextfield');
+            $addIdField = get_config('block_rollsheet', 'includeidfield');
+            $numExtraFields = get_config('block_rollsheet', 'numExtraFields');
             $emptyField = '';
 
             $userdata = array();
@@ -141,20 +141,20 @@ function renderRollsheet(){
             }
 
 	$table->head = array(null);
-	$table->head[1] = get_string('fullName', 'block_signinsheet');
+	$table->head[1] = get_string('fullName', 'block_rollsheet');
 
         // Id number field
         if($addIdField){
-                $table->head[2] = get_string('idnumber', 'block_signinsheet');
+                $table->head[2] = get_string('idnumber', 'block_rollsheet');
         }
 
         // Additional custom text field
         if($addTextField){
-                $table->head[3] = get_config('block_signinsheet', 'customtext');
+                $table->head[3] = get_config('block_rollsheet', 'customtext');
         }
 
         for ($i = 0; $i < $numExtraFields; $i++) {
-           $table->head[] = get_string('date', 'block_signinsheet');
+           $table->head[] = get_string('date', 'block_rollsheet');
         }
 
 	$table->data = $userdatas;

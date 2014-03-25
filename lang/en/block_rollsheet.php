@@ -1,8 +1,8 @@
 <?php
 
 $string['pluginname'] = 'RollSheet';
-$string['signinsheet:addinstance'] = 'RollSheet';
-$string['signinsheet:myaddinstance'] = 'RollSheet';
+$string['rollsheet:addinstance'] = 'RollSheet';
+$string['rollsheet:myaddinstance'] = 'RollSheet';
 
 $string['showall'] = 'Show All';
 $string['showbygroup'] = 'Show By Section';
@@ -49,10 +49,10 @@ $string['includecustomtextfielddesc'] = 'Include Custom text field';
 $string['selectlogo'] = 'Select Logo';
 $string['signaturesheet'] = 'Class RollSheet';
 $string['picturesheet'] = 'Class Photo Roll';
-$string['signinsheet:view'] = 'View';
+$string['rollsheet:view'] = 'View';
 $string['hidefromstudents'] = 'Hide Block From Students';
 $string['hidefromstudents_desc'] = 'When hidden, students will not be able to see the block (site wide)';
-$string['signinsheet:viewblock'] = 'View Sign in sheet block';
+$string['rollsheet:viewblock'] = 'View Sign in sheet block';
 $string['idfield'] = 'Include ID Number';
 $string['idfielddesc'] = 'Include Moodle Student ID field';
 $string['idnumber'] = 'ID Number';

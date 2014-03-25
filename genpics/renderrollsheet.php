@@ -10,7 +10,7 @@ require_login();
 function renderPicSheet(){
 	global $DB, $cid, $CFG, $OUTPUT;
         $pageCounter = 1;
-        $usersPerPage = get_config('block_signinsheet', 'usersPerPage');
+        $usersPerPage = get_config('block_rollsheet', 'usersPerPage');
 	$cid = required_param('cid', PARAM_INT);
 	$selectedGroupId = optional_param('selectgroupsec', '', PARAM_INT);
 	$appendOrder = '';
@@ -72,14 +72,14 @@ function renderPicSheet(){
         $parentDivClose = html_writer::end_tag('div');
         $rowDivOpen = html_writer::start_tag('div', array('class' => 'ROWplaceholder'));
 
-        $disclaimer = html_writer::tag('p',get_string('pdisclaimer', 'block_signinsheet'), array('class' => 'center disclaimer'));
+        $disclaimer = html_writer::tag('p',get_string('pdisclaimer', 'block_rollsheet'), array('class' => 'center disclaimer'));
 
         while(!empty($result)){
 
             if($groupName) {
-                $title = html_writer::div(html_writer::tag('p',$courseName->fullname . ' ' . substr($groupName->name, -3) . ' &mdash; ' . get_string('picturesheet', 'block_signinsheet') . ': page ' . $pageCounter), NULL, array('class' => 'rolltitle center'));
+                $title = html_writer::div(html_writer::tag('p',$courseName->fullname . ' ' . substr($groupName->name, -3) . ' &mdash; ' . get_string('picturesheet', 'block_rollsheet') . ': page ' . $pageCounter), NULL, array('class' => 'rolltitle center'));
 	    } else {
-                $title = html_writer::div(html_writer::tag('p',$courseName->fullname . ' &mdash; ' . get_string('picturesheet', 'block_signinsheet') . ': page ' . $pageCounter), NULL, array('class' => 'rolltitle center'));
+                $title = html_writer::div(html_writer::tag('p',$courseName->fullname . ' &mdash; ' . get_string('picturesheet', 'block_rollsheet') . ': page ' . $pageCounter), NULL, array('class' => 'rolltitle center'));
 	    }
 
             $pageCounter++;

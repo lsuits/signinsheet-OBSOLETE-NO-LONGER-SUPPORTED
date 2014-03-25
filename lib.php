@@ -38,7 +38,7 @@ class simplehtml_form extends moodleform {
         $filemanageropts = $this->_customdata['filemanageropts'];
 
         // FILE MANAGER
-        $mform->addElement('filemanager', 'attachments', get_string('selectlogo', 'block_signinsheet'), null, $filemanageropts);
+        $mform->addElement('filemanager', 'attachments', get_string('selectlogo', 'block_rollsheet'), null, $filemanageropts);
 
         // Buttons
         $this->add_action_buttons();
@@ -58,7 +58,7 @@ class simplehtml_form extends moodleform {
 // look for this function. It always ends with _pluginfile. Depending on where you build
 // your plugin, the name will change. In case, it is a local plugin called file manager.
 
-function block_signinsheet_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options=array()) {
+function block_rollsheet_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options=array()) {
     global $DB;
 
     if ($context->contextlevel != CONTEXT_SYSTEM) {
@@ -86,7 +86,7 @@ function block_signinsheet_pluginfile($course, $cm, $context, $filearea, $args, 
         $filepath = '/'.implode('/', $args).'/';
     }
 
-    $file = $fs->get_file($context->id, 'block_signinsheet', $filearea, $itemid, $filepath, $filename);
+    $file = $fs->get_file($context->id, 'block_rollsheet', $filearea, $itemid, $filepath, $filename);
     if (!$file) {
         return false;
     }

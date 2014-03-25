@@ -7,13 +7,13 @@ require_login();
 $cid = required_param('cid', PARAM_INT);
 $context = context_course::instance($cid);
 $PAGE->set_context($context);
-if (has_capability('block/signinsheet:viewblock', $context)) {
-	require_once('../genpics/rendersigninsheet.php');
+if (has_capability('block/rollsheet:viewblock', $context)) {
+	require_once('../genpics/renderrollsheet.php');
 	$PAGE->set_pagelayout('print');
-	$PAGE->set_url('/blocks/signinsheet/print/pics.php');
-	$logoEnabled = get_config('block_signinsheet', 'customlogoenabled');
+	$PAGE->set_url('/blocks/rollsheet/print/pics.php');
+	$logoEnabled = get_config('block_rollsheet', 'customlogoenabled');
 	echo $OUTPUT->header();
-	$usersPerPage = get_config('block_signinsheet', 'usersPerPage' );
+	$usersPerPage = get_config('block_rollsheet', 'usersPerPage' );
 
 	if($logoEnabled){
 		printHeaderLogo();

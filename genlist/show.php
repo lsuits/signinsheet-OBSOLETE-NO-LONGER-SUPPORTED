@@ -17,7 +17,7 @@ require_once("../../../config.php");
 global $CFG, $DB;
 require_login();
 
-require_once('rendersigninsheet.php');
+require_once('renderrollsheet.php');
 $cid = required_param('cid', PARAM_INT);
 $gid = optional_param('gid', '', PARAM_INT);    
 
@@ -46,26 +46,26 @@ if(isset($selectgroupsec)){
 if($renderType == 'all' || $renderType == ''){
 	$courseName = $DB->get_record('course', array('id'=>$cid), 'shortname', $strictness=IGNORE_MISSING); 
 	$PAGE->navbar->add($courseName->shortname, new moodle_url($CFG->wwwroot . '/course/view.php?id=' . $cid));
-	$PAGE->navbar->add(get_string('showall', 'block_signinsheet'));
+	$PAGE->navbar->add(get_string('showall', 'block_rollsheet'));
 	
 }
 else if($renderType == 'group'){
 	$courseName = $DB->get_record('course', array('id'=>$cid), 'shortname', $strictness=IGNORE_MISSING); 
 	$PAGE->navbar->add($courseName->shortname, new moodle_url($CFG->wwwroot . '/course/view.php?id=' . $cid));
-	$PAGE->navbar->add(get_string('showbygroup', 'block_signinsheet'));
+	$PAGE->navbar->add(get_string('showbygroup', 'block_rollsheet'));
 }
 
-$PAGE->set_url('/blocks/signinsheet/showsigninsheet/show.php');
+$PAGE->set_url('/blocks/rollsheet/showrollsheet/show.php');
 $PAGE->set_context($context);
-$PAGE->set_heading(get_string('pluginname', 'block_signinsheet'));
-$PAGE->set_title(get_string('pluginname', 'block_signinsheet'));
+$PAGE->set_heading(get_string('pluginname', 'block_rollsheet'));
+$PAGE->set_title(get_string('pluginname', 'block_rollsheet'));
 
 echo $OUTPUT->header();
-if (has_capability('block/signinsheet:viewblock', $context)) {
+if (has_capability('block/rollsheet:viewblock', $context)) {
 echo buildMenu($cid);
 }
 
-$logoEnabled = get_config('block_signinsheet', 'customlogoenabled');
+$logoEnabled = get_config('block_rollsheet', 'customlogoenabled');
 
 if($logoEnabled){
 	printHeaderLogo();
@@ -73,11 +73,11 @@ if($logoEnabled){
 
 // Render the page
 $selectgroupsec = optional_param('selectgroupsec', '', PARAM_TEXT);   
-if (has_capability('block/signinsheet:viewblock', $context)) {
+if (has_capability('block/rollsheet:viewblock', $context)) {
 echo renderRollsheet();
 }
 
-class signinsheet_form extends moodleform {
+class rollsheet_form extends moodleform {
  
 	function definition() {
     global $CFG;
@@ -89,7 +89,7 @@ class signinsheet_form extends moodleform {
 /*
  * 
  * Create the HTML output for the list on the right
- * hand side of the showsigninsheet.php page
+ * hand side of the showrollsheet.php page
  * 
  * */
 function buildMenu($cid){	
@@ -97,17 +97,17 @@ function buildMenu($cid){
 	$orderBy = '';
 	$orderBy = optional_param('orderby', '', PARAM_TEXT);
 
-	$outputHTML = '<div class = "floatright"><form action="'.$CFG->wwwroot. '/blocks/signinsheet/genlist/show.php?cid='.$cid.'" method="post">
+	$outputHTML = '<div class = "floatright"><form action="'.$CFG->wwwroot. '/blocks/rollsheet/genlist/show.php?cid='.$cid.'" method="post">
 				 Order By: <select name="orderby" id="orderby">
-								<option value="lastname">'.get_string('lastname', 'block_signinsheet').'</option>
-								<option value="firstname">' .get_string('firstname', 'block_signinsheet').'</option>
+								<option value="lastname">'.get_string('lastname', 'block_rollsheet').'</option>
+								<option value="firstname">' .get_string('firstname', 'block_rollsheet').'</option>
 						  </select>
 						  
 				 Filter: <select id="selectgroupsec" name="selectgroupsec">
-				 	<option value="all">'.get_string('showall', 'block_signinsheet').'</option>
+				 	<option value="all">'.get_string('showall', 'block_rollsheet').'</option>
 				 '. buildGroups($cid).'	
 				 </select>
-				 <input type="submit" value="'.get_string('update', 'block_signinsheet').'"></input>
+				 <input type="submit" value="'.get_string('update', 'block_rollsheet').'"></input>
 				</form>
 				
 				<span class = "floatright">
@@ -127,7 +127,7 @@ function buildMenu($cid){
 				<input type="hidden" name="orderby" value="'.$orderBy.'">
 					
 				
-   				<input type="submit" value="'.get_string('printbutton', 'block_signinsheet').'">
+   				<input type="submit" value="'.get_string('printbutton', 'block_rollsheet').'">
 				</span>
 				</form>
 			    </div>
@@ -166,7 +166,7 @@ function buildGroups($cid){
 	return $buildHTML;	
 }
 
-$mform = new signinsheet_form();
+$mform = new rollsheet_form();
 $mform->focus();
 $mform->display();		
 
